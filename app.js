@@ -7,6 +7,7 @@ var _ = require('lodash');
 
 const homeStartingContent = "'Home' starting content";
 const aboutContent = "'about' content";
+const contactContent = "'Contact' contactContent";
 const posts = [];
 const app = express();
 
