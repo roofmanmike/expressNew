@@ -63,7 +63,6 @@ app.use(express.static("public"));
 app.get("/", function(req, res){
   let item = homeStartingContent;
   let scrapedUp = scrapedList;
-  console.log(scrapedUp);
   scrapedUp.toString();
   res.render("home", {startingContent: homeStartingContent, scrapedUp: scrapedUp, posts: posts});
   });
