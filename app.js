@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 var _ = require('lodash');
 
-const homeStartingContent = "'Home' starting content";
+const homeStartingContent = "Paragraph from backend with EJS";
 const aboutContent = "'about' content";
 const contactContent = "'Contact' contactContent";
 const posts = [];
