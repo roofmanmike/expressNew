@@ -4,6 +4,24 @@
 #title {
     min-width: 90%;
 }
+
+.glow {
+    font-size: inherit;
+    color: #fff;
+    text-align: center;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+ 
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00e63e, 0 0 40px #857b34, 0 0 50px #59fb09, 0 0 60px #41e600, 0 0 70px #06db0e;
+    }
+ 
+    to {
+      text-shadow: 0 0 20px #fff, 0 0 30px #090b6e, 0 0 40px #2878f5, 0 0 50px #272cfb, 0 0 60px #2c1795, 0 0 70px #190cbf, 0 0 80px #13089f;
+    }
+  }
+
 #newPost {
 
     min-width: 90%;

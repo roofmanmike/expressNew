@@ -91,27 +91,9 @@ app.get("/", function(req, res){
 
     res.redirect("/");
     });
-    app.get("/post", function(req, res){
-      res.render("post");
-    })
     
-    app.get("/post/:postName", function(req, res){
-      const requestedTitle = _.lowerCase(req.params.postName);
-
-      posts.forEach(function(post){
-        const storedTitle = _.lowerCase(post.title);
-
-        if (storedTitle === requestedTitle) {
-
-          res.render("post", {
-            title: post.title,
-            content: post.content
-          });
-
-        }
-        
-      });
-    });
+    
+    
 
 
 
