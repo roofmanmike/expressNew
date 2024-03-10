@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 var _ = require('lodash');
 
-const homeStartingContent = "Paragraph from backend with EJS";
+var homeStartingContent = "Your name scraped and pushed thru EJS to this front end from your site, refresh to see it or add more with 'compose'";
 const aboutContent = "'about' content";
 const contactContent = "'Contact' contactContent";
 const posts = [];
@@ -25,7 +25,7 @@ const driver = new Builder()
   .build();
 
 
-  const url = 'https://www.google.com/search?q=w3+schools&oq=w3+sc&gs_lcrp=EgZjaHJvbWUqBwgCEAAYgAQyBggAEEUYOTIGCAEQIxgnMgcIAhAAGIAEMgkIAxAAGAoYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGDwyBggHEAUYQNIBCDU5MTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8';
+  const url = 'https://rapidmod.io/';
 
 
 async function scrapeTitles() {
@@ -37,13 +37,13 @@ async function scrapeTitles() {
     await driver.sleep(2000);
 
 
-    const h1Elements = await driver.findElements(By.tagName('h1'));
+    const h1Elements = await driver.findElements(By.className('site-title'));
 
     for (const h1Element of h1Elements) {
       const text = await h1Element.getText();
-      
       scrapedList.push(text);
-      console.log(scrapedList);
+      
+      console.log(text);
     }
   } finally {
 
@@ -62,10 +62,14 @@ app.use(express.static("public"));
 
 app.get("/", function(req, res){
   let item = homeStartingContent;
-  res.render("home", {startingContent: homeStartingContent, posts: posts});
+  let scrapedUp = scrapedList;
+  console.log(scrapedUp);
+  scrapedUp.toString();
+  res.render("home", {startingContent: homeStartingContent, scrapedUp: scrapedUp, posts: posts});
   });
   app.get("/about", function(req, res){
     let item = aboutContent;
+    let scrapedUp = scrapedList;
     res.render("about", {aboutContent: aboutContent});
     });
   app.get("/contact", function(req, res){
@@ -84,9 +88,6 @@ app.get("/", function(req, res){
 
     posts.push(post);
   
-    // res.render("home", {posts: posts});
-    // res.render("home", {startingContent: homeStartingContent, posts: posts});
-
 
     res.redirect("/");
     });
