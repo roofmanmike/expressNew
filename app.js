@@ -9,52 +9,49 @@ const homeStartingContent = "Paragraph from backend with EJS";
 const aboutContent = "'about' content";
 const contactContent = "'Contact' contactContent";
 const posts = [];
+const scrapedList = [];
 const app = express();
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
-// Set up Chrome options
-const options = new chrome.Options();
-options.addArguments('--headless'); // Run Chrome in headless mode (without GUI)
 
-// Create a new WebDriver instance
+const options = new chrome.Options();
+options.addArguments('--headless'); 
+
+
 const driver = new Builder()
   .forBrowser('chrome')
   .setChromeOptions(options)
   .build();
 
-// Define the URL you want to scrape
-const url = 'https://www.google.com/search?q=w3+schools&oq=w3+sc&gs_lcrp=EgZjaHJvbWUqBwgCEAAYgAQyBggAEEUYOTIGCAEQIxgnMgcIAhAAGIAEMgkIAxAAGAoYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGDwyBggHEAUYQNIBCDU5MTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8';
 
-// Function to scrape h1 titles
+  const url = 'https://www.google.com/search?q=w3+schools&oq=w3+sc&gs_lcrp=EgZjaHJvbWUqBwgCEAAYgAQyBggAEEUYOTIGCAEQIxgnMgcIAhAAGIAEMgkIAxAAGAoYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGDwyBggHEAUYQNIBCDU5MTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8';
+
+
 async function scrapeTitles() {
   try {
-    // Open the website
+
     await driver.get(url);
 
-    // Wait for some time to let the page load (you might need to adjust the time)
+
     await driver.sleep(2000);
 
-    // Find all h1 elements on the page
+
     const h1Elements = await driver.findElements(By.tagName('h1'));
-    const scrapedList = [];
-    // Print the text content of each h1 element
+
     for (const h1Element of h1Elements) {
       const text = await h1Element.getText();
-      console.log('H1 Title:', text);
+      
       scrapedList.push(text);
       console.log(scrapedList);
     }
   } finally {
-    // Close the WebDriver instance
+
     await driver.quit();
   }
 }
 
-// Call the function to start scraping
 scrapeTitles();
-
-
 
 
 
