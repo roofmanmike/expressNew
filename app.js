@@ -7,9 +7,10 @@ var _ = require('lodash');
 
 var homeStartingContent = "Your name scraped and pushed thru EJS to this front end from your site, refresh to see it or add more with 'compose'";
 const aboutContent = "'about' content";
-const contactContent = "'Contact' contactContent";
+const vendorContent = "Refresh to see all your news titles, can select randomly from backend or front with scriptlets <% %>";
 const posts = [];
 const scrapedList = [];
+const newsTitles = [];
 const app = express();
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
@@ -38,12 +39,19 @@ async function scrapeTitles() {
 
 
     const h1Elements = await driver.findElements(By.className('site-title'));
+    const newsElements = await driver.findElements(By.className('news-title'));
 
     for (const h1Element of h1Elements) {
       const text = await h1Element.getText();
       scrapedList.push(text);
       
       console.log(text);
+    }
+    for (const newsElement of newsElements) {
+      const newsText = await newsElement.getText();
+      newsTitles.push(newsText)
+      
+      console.log(newsTitles);
     }
   } finally {
 
@@ -71,9 +79,10 @@ app.get("/", function(req, res){
     let scrapedUp = scrapedList;
     res.render("about", {aboutContent: aboutContent});
     });
-  app.get("/contact", function(req, res){
-    let item = contactContent;
-    res.render("contact", {contactContent: contactContent});
+  app.get("/vendors", function(req, res){
+    let item = vendorContent;
+    let scrapedUp = scrapedList;
+    res.render("vendors", {vendorContent: vendorContent, scrapedUp: newsTitles});
     });
   app.get("/compose", function(req, res){
     res.render("compose");
